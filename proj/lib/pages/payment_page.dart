@@ -4,7 +4,6 @@ import 'package:proj/components/text_feild_num.dart';
 import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 import 'package:proj/components/my_button.dart';
-import 'package:proj/components/my_text_feild.dart';
 import 'package:proj/services/auth/auth_service.dart';
 
 class PaymentPage extends StatefulWidget {
@@ -32,11 +31,13 @@ class _PaymentPageState extends State<PaymentPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
-    Fluttertoast.showToast(msg: 'Payment Success');
+    Fluttertoast.showToast(msg: 'Payment Success: ${response.paymentId}');
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
-    Fluttertoast.showToast(msg: 'Payment failure');
+    Fluttertoast.showToast(
+      msg: 'Payment Failure: ${response.code} - ${response.message}',
+    );
   }
 
   @override
@@ -63,7 +64,6 @@ class _PaymentPageState extends State<PaymentPage> {
               controller: amountController,
               labelText: 'Amount',
               icon: Icons.attach_money,
-              
             ),
             const SizedBox(height: 20),
             MyButton(
@@ -76,17 +76,22 @@ class _PaymentPageState extends State<PaymentPage> {
                   );
                   return;
                 }
+
                 // Check if the input is numeric
-                if (double.tryParse(amountText) == null) {
+                double? amount = double.tryParse(amountText);
+                if (amount == null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text('Please enter a valid amount')),
                   );
                   return;
                 }
 
+                // Convert amount to paise
+                int amountInPaise = (amount * 100).toInt();
+
                 var options = {
-                  'key': 'rzp_test_h9vHK8TeO1jqib',
-                  'amount': amountText,
+                  'key': 'rzp_test_h9vHK8TeO1jqib',// put your api key here
+                  'amount': amountInPaise,
                   'name': authService.currentUser?.email ?? '',
                   'description': 'Fine T-Shirt',
                   'prefill': {
@@ -94,7 +99,12 @@ class _PaymentPageState extends State<PaymentPage> {
                     'email': authService.currentUser?.email ?? '',
                   }
                 };
-                _razorpay.open(options);
+
+                try {
+                  _razorpay.open(options);
+                } catch (e) {
+                  Fluttertoast.showToast(msg: 'Error: $e');
+                }
               },
             ),
           ],
