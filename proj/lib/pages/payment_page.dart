@@ -90,7 +90,7 @@ class _PaymentPageState extends State<PaymentPage> {
                 int amountInPaise = (amount * 100).toInt();
 
                 var options = {
-                  'key': 'rzp_test_h9vHK8TeO1jqib',// put your api key here
+                  'key': 'rzp_test_h9vHK8TeO1jqib',// put your test api key here
                   'amount': amountInPaise,
                   'name': authService.currentUser?.email ?? '',
                   'description': 'Fine T-Shirt',

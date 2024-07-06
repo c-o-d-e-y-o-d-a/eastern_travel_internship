@@ -62,8 +62,17 @@ cd proj
 ### 3. put the razor_pay_test_key in this page - proj\lib\pages\payment_page.dart
 
 
-```js
-cd proj
+```
+var options = {
+                  'key': 'rzp_test_h9vHK8TeO1jqib',// put your test api key here
+                  'amount': amountInPaise,
+                  'name': authService.currentUser?.email ?? '',
+                  'description': 'Fine T-Shirt',
+                  'prefill': {
+                    'contact': '8888888888', // Example contact
+                    'email': authService.currentUser?.email ?? '',
+                  }
+                };
 ```
 
 
@@ -86,11 +95,11 @@ flutter run
 # Screenshots
 
 
-<img src="proj\assets\s8.jpeg" r width="200" height="350">
-<img src="proj\assets\s7.jpeg" r width="200" height="350">
-<img src="proj\assets\s6.jpeg" r width="200" height="350">
-<img src="proj\assets\s5.jpeg" r width="200" height="350">
-<img src="proj\assets\s4.jpeg" r width="200" height="350">
-<img src="proj\assets\s3.jpeg" r width="200" height="350">
-<img src="proj\assets\s2.jpeg" r width="200" height="350">
-<img src="proj\assets\s1.jpeg" r width="200" height="350">
+<img src="proj\assets\s8.jpeg" r width="200" height="380">
+<img src="proj\assets\s7.jpeg" r width="200" height="380">
+<img src="proj\assets\s6.jpeg" r width="200" height="380">
+<img src="proj\assets\s5.jpeg" r width="200" height="380">
+<img src="proj\assets\s4.jpeg" r width="200" height="380">
+<img src="proj\assets\s3.jpeg" r width="200" height="380">
+<img src="proj\assets\s2.jpeg" r width="200" height="380">
+<img src="proj\assets\s1.jpeg" r width="200" height="380">
